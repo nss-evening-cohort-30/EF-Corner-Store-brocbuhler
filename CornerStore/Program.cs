@@ -59,8 +59,22 @@ app.MapGet("/api/cashiers/{id}", (CornerStoreDbContext db, int id) =>
 
 //products
 
-// - Get (idk what search query string param means)
-app.MapGet("/api/products", (CornerStoreDbContext db, string? search) => { });
+// - Get (search query string)
+app.MapGet("/api/products", (CornerStoreDbContext db, string? search) =>
+{
+  if (search == null)
+    {
+        return Results.Ok(db.Products.ToList());
+    }
+    else
+    {
+            return Results.Ok(
+                db.Products
+                .Where(p => p.ProductName == search)
+                .ToList()
+            );
+    }
+});
 //
 
 // - Create
@@ -78,7 +92,7 @@ app.MapPut("/api/products/{id}", (CornerStoreDbContext db, Product update, int i
     Product product = db.Products.FirstOrDefault(p => p.Id == id);
     product.ProductName = update.ProductName;
     product.Price = update.Price;
-    product.brand = update.brand;
+    product.Brand = update.Brand;
     product.CategoryId = update.CategoryId;
     db.SaveChanges();
     return Results.NoContent();
@@ -102,7 +116,32 @@ app.MapGet("api/orders/{id}", (CornerStoreDbContext db, int id) =>
 //
 
 // - Get (takes a orderDate that only returns todays orders)
-app.MapGet("/api/orders", (CornerStoreDbContext db, string? orderDate) => { });
+app.MapGet("/api/orders", (CornerStoreDbContext db, string? orderDate) =>
+{
+    if (orderDate == null)
+    {
+        return Results.Ok(db.Orders.ToList());
+    }
+    else
+    {
+        DateTime parsedDate;
+        if (DateTime.TryParse(orderDate, out parsedDate))
+        {
+            return Results.Ok(
+                db.Orders
+                .Where(o => o.PaidOnDate.HasValue && o.PaidOnDate.Value.Date == parsedDate.Date)
+                .ToList()
+            );
+        }
+        else
+        {
+            return Results.BadRequest("Invalid date format");
+        }
+    }
+});
+
+
+
 
 //
 

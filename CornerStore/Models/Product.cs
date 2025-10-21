@@ -10,7 +10,7 @@ public class Product
   [Required]
   public decimal Price { get; set; }
   [Required]
-  public string brand { get; set; }
+  public string Brand { get; set; }
   [Required]
   public int CategoryId { get; set; }
   public Category Category { get; set; }

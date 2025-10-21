@@ -5,7 +5,7 @@ public class CornerStoreDbContext : DbContext
 {
 
     public DbSet<Cashier> Cashiers { get; set; }
-    public DbSet<Category> Categorys { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     public DbSet<Order> Orders { get; set; }
 
@@ -40,9 +40,9 @@ public class CornerStoreDbContext : DbContext
         );
 
         modelBuilder.Entity<Product>().HasData(
-            new Product { Id = 1, ProductName = "Cola", Price = 1.50m, brand = "FizzCo", CategoryId = 1 },
-            new Product { Id = 2, ProductName = "Chips", Price = 2.00m, brand = "CrunchTime", CategoryId = 2 },
-            new Product { Id = 3, ProductName = "Water", Price = 1.00m, brand = "ClearSpring", CategoryId = 1 }
+            new Product { Id = 1, ProductName = "Cola", Price = 1.50m, Brand = "FizzCo", CategoryId = 1 },
+            new Product { Id = 2, ProductName = "Chips", Price = 2.00m, Brand = "CrunchTime", CategoryId = 2 },
+            new Product { Id = 3, ProductName = "Water", Price = 1.00m, Brand = "ClearSpring", CategoryId = 1 }
         );
 
         modelBuilder.Entity<Order>().HasData(
