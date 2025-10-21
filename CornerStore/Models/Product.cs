@@ -13,4 +13,5 @@ public class Product
   public string brand { get; set; }
   [Required]
   public int CategoryId { get; set; }
+  public Category Category { get; set; }
 }

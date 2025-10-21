@@ -11,4 +11,6 @@ public class Order
   public Cashier cashier { get; set; }
   public int Total { get; set; } // must compute
   public DateTime? PaidOnDate { get; set; }
+
+  public List<OrderProduct> OrderProducts { get; set; }
 }

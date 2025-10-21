@@ -18,6 +18,15 @@ public class CornerStoreDbContext : DbContext
     {
 
     }
+
+      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+        // fallback if EF can’t get DI config
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=coman1209;Database=CornerStore");
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cashier>().HasData(
@@ -42,9 +51,9 @@ public class CornerStoreDbContext : DbContext
         );
 
         modelBuilder.Entity<OrderProduct>().HasData(
-            new OrderProduct { OrderId = 1, ProductId = 1, Quantity = 2 },
-            new OrderProduct { OrderId = 1, ProductId = 2, Quantity = 1 },
-            new OrderProduct { OrderId = 2, ProductId = 3, Quantity = 3 }
+            new OrderProduct { Id = 1, OrderId = 1, ProductId = 1, Quantity = 2 },
+            new OrderProduct { Id = 2, OrderId = 1, ProductId = 2, Quantity = 1 },
+            new OrderProduct { Id = 3, OrderId = 2, ProductId = 3, Quantity = 3 }
         );
     }
 }
